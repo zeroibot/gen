@@ -4,12 +4,15 @@ import (
 	"math/rand/v2"
 	"strings"
 	"uuid"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 const (
 	upperLetters string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	lowerLetters string = "abcdefghijklmnopqrstuvwxyz"
 	digits       string = "0123456789"
+	hashCost     int    = 10
 )
 
 func generateUUIDv7() string {
@@ -21,6 +24,11 @@ func generateCode(length int, pattern string) string {
 	useLower := strings.Contains(pattern, "a")
 	useDigit := strings.Contains(pattern, "1")
 	return generateRandomString(length, useUpper, useLower, useDigit)
+}
+
+func hashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), hashCost)
+	return string(bytes), err
 }
 
 func generateRandomString(length int, useUpper, useLower, useDigit bool) string {
