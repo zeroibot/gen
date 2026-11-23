@@ -2,6 +2,7 @@ package main
 
 import (
 	"math/rand/v2"
+	"strings"
 	"uuid"
 )
 
@@ -13,6 +14,13 @@ const (
 
 func generateUUIDv7() string {
 	return uuid.NewV7().String()
+}
+
+func generateCode(length int, pattern string) string {
+	useUpper := strings.Contains(pattern, "A")
+	useLower := strings.Contains(pattern, "a")
+	useDigit := strings.Contains(pattern, "1")
+	return generateRandomString(length, useUpper, useLower, useDigit)
 }
 
 func generateRandomString(length int, useUpper, useLower, useDigit bool) string {
